@@ -1,0 +1,30 @@
+ @model List<TopicListModel>
+ 
+ @{
+      int count = Model.Count;
+ }
+
+ <div class="card my-4 bg-dark">
+          <h5 class="card-header text-white">Son Yazılar</h5>
+          <div class="card-body" >
+          
+                @foreach (var item in Model)
+                {
+                        <div class="mt-2">
+                             <a class="text-center text-white" href="/@Url.FriendlyUrl(item.Title)/@item.Id"
+                               style="font: 700 11px/13px 'Roboto Condensed', sans-serif;">@item.Title</a>
+                        </div>
+
+                      <p class="float-right text-muted " style="color: #999" >
+                        @item.PostedTime.ToShortDateString()</p>
+
+                     @if(count > 1){
+                          <hr class="bg-secondary" style="margin-top: 30px">
+                     }
+
+                     {
+                          count--;
+                     }
+                }
+        </div>
+</div>

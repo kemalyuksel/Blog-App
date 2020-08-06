@@ -1,0 +1,39 @@
+@model List<TopicListModel>
+
+<a asp-action="AddTopic" class="btn btn-success btn-sm my-2 mt-2 mx-auto">Yeni Blog Oluştur</a>
+
+<table class="table table-bordered table-hover">
+    <tbody>
+
+        <tr>
+            <th>Başlık</th>
+            <th>Kategori İşlemleri</th>
+            <th>İşlemler</th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+             <tr>
+                <td>@item.Title</td>
+                <td><a asp-action="AssignCategory" asp-route-id="@item.Id">Kategori Ata</a></td>
+                <td width="10%">
+                    <a asp-action="UpdateTopic" asp-route-id="@item.Id" class="btn btn-info btn-sm">Düzenle</a>
+                    <a asp-action="DeleteTopic" asp-route-id="@item.Id" class="btn btn-danger btn-sm">Sil</a>
+                </td>
+            </tr>
+        }
+       
+    </tbody>
+</table>
+
+@section Css{
+    <link rel="stylesheet" href="/lib/trumbowyg/dist/ui/trumbowyg.min.css">
+}
+
+@section Script{
+    <script src="/lib/trumbowyg/dist/trumbowyg.min.js"></script>
+
+    <script>
+        $('#description').trumbowyg();
+    </script>
+}

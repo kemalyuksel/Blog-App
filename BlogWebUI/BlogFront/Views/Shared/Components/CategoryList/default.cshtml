@@ -1,0 +1,21 @@
+@model List<CategoryWithTopicsCountDto>
+
+    <div class="card my-4 bg-dark">
+          <h5 class="card-header text-white">Kategoriler</h5>
+@foreach (var item in Model)
+{
+         <div class="list-group ">
+        <a asp-action="Index" asp-route-categoryId="@item.CategoryId"  class="bg-dark
+         list-group-item list-group-item-action @(ViewBag.ActiveCategory?.ToString()== 
+        item.CategoryId.ToString()?"text-primary":"text-light") 
+        d-flex justify-content-between align-items-center">
+          @item.CategoryName
+          <span class="badge @(ViewBag.ActiveCategory?.ToString()== 
+        item.CategoryId.ToString()?"badge-secondary":"badge-primary") badge-pill my-2 pt-1 pb-1">
+        @item.TopicsCount</span>
+        </a>
+       </div>
+               
+
+}   
+</div>

@@ -1,0 +1,135 @@
+         @model TopicListModel
+
+        @{
+          var comments = (List<CommentListModel>)ViewBag.Comments;
+
+            void GetComments(List<CommentListModel> comments){
+              
+        if(comments.Count > 0 ){
+
+          foreach(var comment in comments){
+
+          <div class="media my-3">
+          <img class="d-flex mr-3 rounded-circle" width="50px" src="/img/stock.jpg" alt="">
+          <div class="media-body">
+            <h5 class="mt-0">@comment.AuthorName</h5>
+            @comment.Description
+            <br>
+           <button type="button" class="btn btn-sm btn-primary float-right" 
+           onclick="showCommentForm(@comment.Id,@comment.TopicId)">Cevapla</button>
+           <div id="commentBox@(comment.Id)">
+
+           </div>
+            <label class="float-left mt-2" for="@comment.PostedTime">@comment.PostedTime</label>
+            <br>
+           <hr>
+           @{
+             GetComments(comment.SubComments);
+           }
+          
+          </div>
+        </div>
+
+              }
+            }
+          }
+        }
+        
+      <div class="shadow p-3 mb-5 bg-white rounded">
+          <!-- Title -->
+        <h1 class="mt-4 font-weight-bold p-2 ml-2" style="font-family: TMSans;">@Model.Title</h1>
+
+        <!-- Author -->
+         
+        <!-- Date/Time -->
+        <p class="text-right">@Model.PostedTime.ToLongDateString()</p>
+
+        <hr>
+
+        <!-- Preview Image -->
+        <div class="text-center">
+        <topicimage id="@Model.Id" topic-image-type="@TopicImageType.TopicDetail" ></topicimage>
+        </div>
+
+        <!-- Post Content -->
+       
+          <style>
+            #Rawhtml img.lazyloaded{
+              max-width: calc(100%) !important;
+            }
+
+            #Rawhtml p.line{
+              background-color: darkgreen !important;
+            }
+
+          </style>
+
+          <div id="Rawhtml" class="mt-2">
+            @Html.Raw(@Model.Description)
+          </div>
+        
+
+      </div>
+
+        <hr>
+
+        <!-- Comments Form -->
+
+        <div class="card my-4">
+          <h5 class="card-header">Yorum Yap:</h5>
+          <div class="card-body">
+            <form method="POST" action="/Home/AddComment">
+                <input type="hidden" name="TopicId" value="@Model.Id">
+                <input type="hidden" name="ParentCommentId">
+                <div class="form-group">
+                  <label>* Ad : </label>
+                  <input type="text" name="AuthorName" required class="form-control" >
+              </div>
+
+               <div class="form-group">
+                  <label>* Email : </label>
+                  <input type="email" name="AuthorEmail" required class="form-control" >
+              </div>
+
+              <div class="form-group">
+                 <label> * Yorumunuz : </label>
+                <textarea class="form-control" name="Description" required rows="3"></textarea>
+              </div>
+              <button type="submit" class="btn btn-primary">Gönder</button>
+            </form>
+          </div>
+        </div>
+
+        <!-- Comment with nested comments -->
+
+@{
+  GetComments(comments);
+}
+
+@section Script{
+
+  <script>
+
+    function showCommentForm(id,topicId){
+      let html = ` <div class="card my-4 mt-5"> <h5 class="card-header">Yorum Yap:</h5> <div class="card-body">
+         <form method="POST" action="/Home/AddComment"> <input type="hidden" name="TopicId" value="${topicId}">
+          <input type="hidden" name="ParentCommentId" value="${id}"> 
+          <div class="form-group"> <label>* Ad : </label> 
+          <input type="text" name="AuthorName" required class="form-control" > </div>
+          <div class="form-group"> <label>* Email : </label> 
+          <input type="email" name="AuthorEmail" required class="form-control" > </div>
+          <div class="form-group"> <label>* Yorumunuz : </label>  
+          <textarea name="Description" class="form-control" rows="3" required></textarea> 
+          </div>
+          <button type="button" onclick="hideCommentForm(${id})" class="btn btn-danger">Vazgeç</button>
+          <button type="submit" class="btn btn-primary">Gönder</button> </form> </div></div>`;
+          $("#commentBox"+id).html(html);
+    }
+
+    function hideCommentForm(id){
+      $("#commentBox"+id).html("");
+    }
+
+  </script>
+
+} 

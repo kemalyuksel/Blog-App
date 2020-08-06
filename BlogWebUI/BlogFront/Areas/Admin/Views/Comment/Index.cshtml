@@ -1,0 +1,33 @@
+@model List<CommentListModel>
+
+<table class="table table-bordered table-hover mt-2 ">
+    <tbody>
+     
+             <tr>
+            <th>Yazan</th>
+            <th>Emaili</th>
+            <th>Onay</th>
+            <th>Yorum Tarihi</th>
+            <th width="10%">İşlem</th>
+        </tr>
+
+         @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.AuthorName</td>
+                <td>@item.AuthorEmail</td>
+                   @if(item.IsApproved){
+                     <td><span class="badge badge-success lead">Onaylı</span></td>
+                    }else{
+                        <td><span class="badge badge-danger lead">Onaysız</span></td>
+                    }
+                <td>@item.PostedTime</td>
+                <td>
+                    <a asp-action="UpdateComment" asp-route-id="@item.Id" class="btn btn-info btn-sm">Onayla</a>
+                    <a asp-action="DeleteComment" asp-route-id="@item.Id" class="btn btn-danger btn-sm">Sil</a>
+                </td>
+            </tr>
+        }
+
+    </tbody>
+</table>

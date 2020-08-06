@@ -1,0 +1,34 @@
+ @model CommentApprovedModel
+
+<form asp-action="UpdateComment" asp-controller="Comment" asp-area="Admin" method="POST" class="p-3">
+    <input type="hidden" asp-for="@Model.Id">
+
+<div class="form-group">
+
+    <div class="form-group">
+        <label asp-for="AuthorName"></label>
+        <input asp-for="AuthorName" class="form-control">
+    </div>
+
+    <div class="form-group">
+        <label asp-for="AuthorEmail"></label>
+        <input asp-for="AuthorEmail" class="form-control">
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Description"></label>
+        <textarea asp-for="Description" class="form-control"> </textarea>
+    </div>
+    
+    <div class="form-group">
+         <label asp-for="IsApproved"></label>
+        <input asp-for="IsApproved" class="form-control">
+    </div>
+
+</div>
+
+<div class="form-group">
+<button type="submit" class="btn btn-block btn-info">Kaydet</button>
+</div>
+
+</form>

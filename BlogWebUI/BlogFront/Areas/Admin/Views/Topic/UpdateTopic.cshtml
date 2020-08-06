@@ -1,0 +1,41 @@
+ @model TopicUpdateModel
+
+<form asp-action="UpdateTopic" method="POST" enctype="multipart/form-data" class="p-3">
+
+<input type="hidden" asp-for="@Model.Id">
+
+<div class="form-group">
+    <label asp-for="Title"></label>
+    <input asp-for="Title" class="form-control">
+</div>
+
+<div class="form-group">
+    <label asp-for="ShortDescription"></label>
+    <textarea asp-for="ShortDescription" class="form-control"> </textarea>
+</div>
+
+<div class="form-group">
+    <label asp-for="Description"></label>
+    <textarea asp-for="Description" class="form-control"> </textarea>
+</div>
+
+<div class="form-group">
+    <label asp-for="Image"></label>
+    <input asp-for="Image" type="file" class="form-control-file">
+</div>
+
+<div class="form-group">
+<button type="submit" class="btn btn-block btn-info">Kaydet</button>
+</div>
+
+</form>
+
+@section Css{
+    <link rel="stylesheet" href="/lib/Trumbowyg/dist/ui/trumbowyg.min.css">
+}
+@section Script{
+    <script src="/lib/Trumbowyg/dist/trumbowyg.min.js"></script>
+    <script>
+        $("#Description").trumbowyg();
+    </script>
+}
